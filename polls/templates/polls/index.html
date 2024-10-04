@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Candidates</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <ul class="nav-link">
+                <li>
+                    {% if user.is_authenticated %}
+                        <span>Welcome, {{ user.username }}</span>
+                   
+                </li>
+                <li>
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <script>
+            setTimeout(function(){
+                window.location.reload();
+            }, 10000);
+        </script>
+        
+    </header>
+    
+    
+    <h1 class="text-center">All Candidates</h1>
+    {% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="card-container">
+        {% for all in candidate %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{ all.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h4 class="card-title text-primary">{{ all.Name }}</h4>
+                <h5 class="card-title">Age: {{ all.age }}</h5>
+                <h5 class="card-title">Position: {{ all.position }}</h5>
+                <h5 class="card-title">Party: {{ all.party }}</h5>
+                <h5 class="card-title text-danger">Votes: {{ all.total_votes }}</h5>
+                <form action="{% url 'vote' all.id %}" method="POST">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                        <button type="submit" class="btn btn-primary">Vote</button>
+                    {% else %}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal{{ all.id }}">
+                            Vote
+                        </button>
+                    {% endif %}
+                </form>
+
+                <div class="modal fade" id="loginModal{{ all.id }}" tabindex="-1" aria-labelledby="loginModalLabel{{ all.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="loginModalLabel{{ all.id }}">Login to Vote</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p> Please login first to vote</p>
+                                <a href="{% url 'login' %}" type="submit" class="btn btn-primary">Login</a>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

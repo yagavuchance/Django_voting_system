@@ -1,0 +1,78 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+/* Flexbox container for the cards */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust the gap between cards */
+    justify-content: center; /* Center cards horizontally */
+    padding: 20px; /* Add padding around the container */
+   
+  }
+  
+  /* Optional: Adjust card styles */
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgb(255, 255, 255);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 15px;
+    background-color: #fff;
+  }
+  
+  .card-title {
+    margin-bottom: 10px;
+    
+  }
+  header {
+    background-color: #1038d8;
+    padding: 15px 20px;
+    
+}
+
+.nav {
+    display: flex;
+    justify-content: flex-end; /* Aligns links to the right */
+    align-items: center;
+}
+
+.nav-link {
+    list-style: none;
+    display: flex;
+}
+
+.nav-link li {
+    margin-left: 20px;
+}
+
+.nav-link a {
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-link a {
+  display: inline;
+    background-color: #d9534f; /* Bootstrap danger color */
+}
+
+.nav-link a.logout:hover {
+    background-color: #c9302c; /* Darker shade on hover */
+}
+
